@@ -1,0 +1,33 @@
+{
+  "originHash" : "d393931ff35e58ca8cb41db39e40b4e30f602e8b28777b4c88586cc397c85876",
+  "pins" : [
+    {
+      "identity" : "mmlanscan",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/b5i/MMLanScan.git",
+      "state" : {
+        "revision" : "0ed541d3d19b871b41f8f84e891db0d7557c5186",
+        "version" : "4.0.0"
+      }
+    },
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core.git",
+      "state" : {
+        "revision" : "cccb3ca9e26ec452a29f2f0d4050d1e38b8a3d43",
+        "version" : "14.14.0"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift.git",
+      "state" : {
+        "revision" : "1c105d34f25af7851c5a3ff146be006de247a6b4",
+        "version" : "10.54.6"
+      }
+    }
+  ],
+  "version" : 3
+}

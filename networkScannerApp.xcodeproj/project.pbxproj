@@ -6,13 +6,46 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9492EC592EC4E09700A4582F /* MMLanScan in Frameworks */ = {isa = PBXBuildFile; productRef = 9492EC582EC4E09700A4582F /* MMLanScan */; };
+		9492ECAA2EC4EAA000A4582F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9492ECA92EC4EAA000A4582F /* RealmSwift */; };
+		9492ECEC2EC4EF9000A4582F /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9492ECA92EC4EAA000A4582F /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9492ECED2EC4EF9000A4582F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9492ECEC2EC4EF9000A4582F /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9492EC252EC47C6900A4582F /* networkScannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networkScannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9492EC3E2EC4823900A4582F /* Exceptions for "networkScannerApp" folder in "networkScannerApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 9492EC242EC47C6900A4582F /* networkScannerApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9492EC272EC47C6900A4582F /* networkScannerApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9492EC3E2EC4823900A4582F /* Exceptions for "networkScannerApp" folder in "networkScannerApp" target */,
+			);
 			path = networkScannerApp;
 			sourceTree = "<group>";
 		};
@@ -23,6 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9492ECAA2EC4EAA000A4582F /* RealmSwift in Frameworks */,
+				9492EC592EC4E09700A4582F /* MMLanScan in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +90,7 @@
 				9492EC212EC47C6900A4582F /* Sources */,
 				9492EC222EC47C6900A4582F /* Frameworks */,
 				9492EC232EC47C6900A4582F /* Resources */,
+				9492ECED2EC4EF9000A4582F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -65,6 +101,8 @@
 			);
 			name = networkScannerApp;
 			packageProductDependencies = (
+				9492EC582EC4E09700A4582F /* MMLanScan */,
+				9492ECA92EC4EAA000A4582F /* RealmSwift */,
 			);
 			productName = networkScannerApp;
 			productReference = 9492EC252EC47C6900A4582F /* networkScannerApp.app */;
@@ -94,6 +132,10 @@
 			);
 			mainGroup = 9492EC1C2EC47C6900A4582F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9492EC572EC4E09700A4582F /* XCRemoteSwiftPackageReference "MMLanScan" */,
+				9492ECA62EC4EAA000A4582F /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9492EC262EC47C6900A4582F /* Products */;
 			projectDirPath = "";
@@ -256,11 +298,16 @@
 				DEVELOPMENT_TEAM = U38SYYH567;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = networkScannerApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Разрешите доступ к Bluetooth, чтобы приложение могло находить устройства рядом с вами";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Приложению нужен доступ к локальной сети, чтобы сканировать вашу Wi-Fi сеть и находить устройства.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -269,12 +316,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.networkScannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -288,11 +339,16 @@
 				DEVELOPMENT_TEAM = U38SYYH567;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = networkScannerApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Разрешите доступ к Bluetooth, чтобы приложение могло находить устройства рядом с вами";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Приложению нужен доступ к локальной сети, чтобы сканировать вашу Wi-Fi сеть и находить устройства.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -301,12 +357,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.networkScannerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -332,6 +392,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9492EC572EC4E09700A4582F /* XCRemoteSwiftPackageReference "MMLanScan" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/b5i/MMLanScan.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.0.0;
+			};
+		};
+		9492ECA62EC4EAA000A4582F /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.54.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9492EC582EC4E09700A4582F /* MMLanScan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9492EC572EC4E09700A4582F /* XCRemoteSwiftPackageReference "MMLanScan" */;
+			productName = MMLanScan;
+		};
+		9492ECA92EC4EAA000A4582F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9492ECA62EC4EAA000A4582F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9492EC1D2EC47C6900A4582F /* Project object */;
 }

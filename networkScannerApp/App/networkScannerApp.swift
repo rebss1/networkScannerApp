@@ -1,5 +1,5 @@
 //
-//  networkScannerAppApp.swift
+//  networkScannerApp.swift
 //  networkScannerApp
 //
 //  Created by Илья Лощилов on 12.11.2025.
@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct networkScannerAppApp: App {
+struct networkScannerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }
