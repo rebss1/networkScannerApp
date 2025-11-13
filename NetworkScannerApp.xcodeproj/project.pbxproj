@@ -321,11 +321,12 @@
 				INFOPLIST_FILE = networkScannerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NetScan;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Разрешите доступ к Bluetooth, чтобы приложение могло находить устройства рядом с вами";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Разрешите доступ к Bluetooth, чтобы приложение могло находить устройства рядом с вами.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Приложению нужен доступ к локальной сети, чтобы сканировать вашу Wi-Fi сеть и находить устройства.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -363,11 +364,12 @@
 				INFOPLIST_FILE = networkScannerApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NetScan;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Разрешите доступ к Bluetooth, чтобы приложение могло находить устройства рядом с вами";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Разрешите доступ к Bluetooth, чтобы приложение могло находить устройства рядом с вами.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Приложению нужен доступ к локальной сети, чтобы сканировать вашу Wi-Fi сеть и находить устройства.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

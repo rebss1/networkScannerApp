@@ -106,7 +106,7 @@ excluded:
 warning_threshold: 100
 unneeded_break_in_switch: error
 syntactic_sugar: error
-redundant_optional_initialization: error
+implicit_optional_initialization: error
 cyclomatic_complexity:
   warning: 10
   error: 40
