@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 final class RDevice: Object {
-    @Persisted(primaryKey: true) var id: UUID = UUID()
+    @Persisted(primaryKey: true) var id = UUID()
     @Persisted var kind: String = DeviceType.bluetooth.rawValue
     @Persisted var name: String?
     @Persisted var uuid: String?

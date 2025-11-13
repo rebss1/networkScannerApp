@@ -11,12 +11,12 @@ import SwiftUI
 import UIKit
 
 @MainActor
-final class Popup {
+enum Popup {
     
     // MARK: - Public
     
     static func showAlert(
-        title: String = "",
+        title: String,
         message: String,
         buttonTitle: String = "ОК",
         onTap: (() -> Void)? = nil
@@ -42,7 +42,7 @@ final class Popup {
     }
     
     static func showConfirm(
-        title: String = "",
+        title: String,
         message: String,
         yesTitle: String = "Да",
         noTitle: String = "Нет",
@@ -66,23 +66,6 @@ final class Popup {
         config.duration = .forever
         config.interactiveHide = true
         SwiftMessages.show(config: config, view: view)
-    }
-    
-    static func show<Content: View>(
-            id: String = UUID().uuidString,
-            config: SwiftMessages.Config? = nil,
-            @ViewBuilder content: () -> Content
-    ) {
-        let hosting = MessageHostingView(
-            id: id,
-            content: content()
-        )
-        
-        var cfg = config ?? defaultCenterConfig()
-        cfg.duration = .forever
-        cfg.interactiveHide = true
-        
-        SwiftMessages.show(config: cfg, view: hosting)
     }
     
     static func hide() {

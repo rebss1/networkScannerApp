@@ -13,23 +13,24 @@ import FactoryKit
 final class HistoryViewModel: ObservableObject {
     
     // MARK: - Properties
-
-    @Injected(\.repository) private var repository: Repository
     
-    @Published var sessions: [ScanSession] = []
-    @Published var filterName: String = ""
-    @Published var fromDate: Date?
-    @Published var toDate: Date?
-
+    @LazyInjected(\.repository) private var repository
+    
+    @Published private(set) var sessions: [ScanSession] = []
+    @Published private(set) var filterName: String = ""
+    @Published private(set) var fromDate: Date?
+    @Published private(set) var toDate: Date?
+    
     // MARK: - Methods
-
+    
     func loadData() {
         do {
-            sessions = try repository.fetchSessions(
+            let result = try repository.fetchSessions(
                 filterName: filterName,
                 from: fromDate,
                 to: toDate
             )
+            sessions = result
         } catch {
             print("History fetch error: \(error)")
         }

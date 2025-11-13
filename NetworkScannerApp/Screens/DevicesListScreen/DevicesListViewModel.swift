@@ -9,43 +9,33 @@ import SwiftUI
 import FactoryKit
 import Combine
 
+@MainActor
 final class DevicesListViewModel: ObservableObject {
     
     // MARK: - Properties
-
-    @Injected(\.repository) private var repository: Repository
     
-    @Published var btDevices: [BluetoothDevice] = []
-    @Published var lanDevices: [LanDevice] = []
-    @Published var scanDate: String = ""
-    @Published var isLoading = false
+    @LazyInjected(\.repository) private var repository
+    
+    @Published private(set) var btDevices: [BluetoothDevice] = []
+    @Published private(set) var lanDevices: [LanDevice] = []
+    @Published private(set) var scanDate: String = ""
     
     // MARK: - Init
-
+    
     init(sessionId: UUID) {
         loadData(with: sessionId)
     }
     
     // MARK: - Methods
-
-    func showDetailsView(with device: DeviceDetails) {
-        Popup.show {
-            DeviceDetailView(device: device)
-                .padding()
-        }
-    }
     
     private func loadData(with sessionId: UUID) {
-        isLoading = true
         do {
-            let all = try repository.fetchSessions(filterName: nil, from: nil, to: nil)
-            let session = all.first(where: { $0.id == sessionId })
+            let session = try repository.fetchSession(by: sessionId)
             scanDate = session?.startedAt.formatted(date: .abbreviated, time: .standard) ?? ""
             btDevices = session?.bluetoothDevices ?? []
             lanDevices = session?.lanDevices ?? []
         } catch {
             print(error.localizedDescription)
         }
-        isLoading = false
     }
 }

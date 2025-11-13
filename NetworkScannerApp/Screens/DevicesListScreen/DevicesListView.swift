@@ -10,20 +10,12 @@ import SwiftUI
 struct DevicesListView: View {
     
     // MARK: - Properties
-
+    
     private let viewModel: DevicesListViewModel
     
     // MARK: - Body
-
-    var body: some View {
-        NavigationView {
-            contentView
-        }
-    }
     
-    // MARK: - Subviews
-
-    private var contentView: some View {
+    var body: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(alignment: .leading, spacing: 16) {
                 Text("Bluetooth")
@@ -31,13 +23,14 @@ struct DevicesListView: View {
                 
                 LazyVStack(spacing: 4) {
                     ForEach(viewModel.btDevices) { device in
-                        DeviceView(
-                            iconName: "bolt.horizontal.circle",
-                            title: device.name,
-                            subtitle: device.id.uuidString
-                        )
-                        .onTapGesture {
-                            viewModel.showDetailsView(with: .bluetooth(device))
+                        NavigationLink {
+                            DeviceDetailView(device: .bluetooth(device))
+                        } label: {
+                            DeviceView(
+                                iconName: "bolt.horizontal.circle",
+                                title: device.name,
+                                subtitle: device.id.uuidString
+                            )
                         }
                     }
                 }
@@ -47,13 +40,14 @@ struct DevicesListView: View {
                 
                 LazyVStack(spacing: 4) {
                     ForEach(viewModel.lanDevices) { device in
-                        DeviceView(
-                            iconName: "bolt.horizontal.circle",
-                            title: device.ipAddress,
-                            subtitle: device.id.uuidString
-                        )
-                        .onTapGesture {
-                            viewModel.showDetailsView(with: .lan(device))
+                        NavigationLink {
+                            DeviceDetailView(device: .lan(device))
+                        } label: {
+                            DeviceView(
+                                iconName: "network",
+                                title: device.ipAddress,
+                                subtitle: device.id.uuidString
+                            )
                         }
                     }
                 }

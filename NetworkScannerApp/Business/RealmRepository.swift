@@ -12,35 +12,35 @@ import FactoryKit
 final class RealmRepository: Repository {
     
     // MARK: - Properties
-
-    private let realm: Realm
+    
+    private let configuration: Realm.Configuration
 
     // MARK: - Init
 
     init(configuration: Realm.Configuration = .defaultConfiguration) {
-        realm = Self.makeRealm(using: configuration)
+        self.configuration = configuration
     }
     
     // MARK: - Methods
-
-    private static func makeRealm(using config: Realm.Configuration) -> Realm {
-        if let realm = try? Realm(configuration: config) {
+    
+    private func makeRealm() throws -> Realm {
+        if let realm = try? Realm(configuration: configuration) {
             return realm
         }
-
-        print("⚠️ Realm init failed for provided configuration. Switching to in-memory Realm.")
-
+        
+        print("⚠️ Realm init failed. Switching to in-memory Realm.")
+        
         let fallback = Realm.Configuration(inMemoryIdentifier: "fallback")
         if let realm = try? Realm(configuration: fallback) {
             return realm
         }
-
+        
         let uniqueFallback = Realm.Configuration(inMemoryIdentifier: UUID().uuidString)
         if let realm = try? Realm(configuration: uniqueFallback) {
             return realm
         }
-
-        fatalError("❌ Unable to initialize Realm even with in-memory fallbacks.")
+        
+        fatalError("❌ Unable to initialize Realm even with fallbacks.")
     }
     
     func saveSession(
@@ -49,10 +49,12 @@ final class RealmRepository: Repository {
         bluetooth: [BluetoothDevice],
         lan: [LanDevice]
     ) throws -> UUID {
+        let realm = try makeRealm()
+        
         let session = RScanSession()
         session.startedAt = startedAt
         session.finishedAt = finishedAt
-
+        
         let btDevices = bluetooth.map { device -> RDevice in
             let rDevice = RDevice()
             rDevice.kind = DeviceType.bluetooth.rawValue
@@ -72,19 +74,21 @@ final class RealmRepository: Repository {
             return rDevice
         }
         session.devices.append(objectsIn: btDevices + lanDevices)
-
+        
         try realm.write {
             realm.add(session, update: .modified)
         }
         
         return session.id
     }
-
+    
     func fetchSessions(
         filterName: String?,
         from: Date?,
         to: Date?
     ) throws -> [ScanSession] {
+        let realm = try makeRealm()
+        
         var sessions = realm.objects(RScanSession.self)
             .sorted(byKeyPath: "startedAt", ascending: false)
 
@@ -131,6 +135,48 @@ final class RealmRepository: Repository {
                 lanDevices: lanDevices
             )
         }
+    }
+    
+    func fetchSession(by id: UUID) throws -> ScanSession? {
+        let realm = try makeRealm()
+        
+        guard let rSession = realm.object(ofType: RScanSession.self, forPrimaryKey: id) else {
+            return nil
+        }
+
+        let btDevices: [BluetoothDevice] = Array(
+            rSession.devices
+                .filter { $0.kind == DeviceType.bluetooth.rawValue }
+                .map { device in
+                    BluetoothDevice(
+                        id: device.id,
+                        name: device.name,
+                        rssi: device.rssi,
+                        state: device.status
+                    )
+                }
+        )
+
+        let lanDevices: [LanDevice] = Array(
+            rSession.devices
+                .filter { $0.kind == DeviceType.lan.rawValue }
+                .map { device in
+                    LanDevice(
+                        id: device.id,
+                        ipAddress: device.ip ?? "",
+                        macAddress: device.mac,
+                        hostname: device.name
+                    )
+                }
+        )
+
+        return ScanSession(
+            id: rSession.id,
+            startedAt: rSession.startedAt,
+            finishedAt: rSession.finishedAt,
+            bluetoothDevices: btDevices,
+            lanDevices: lanDevices
+        )
     }
 }
 
