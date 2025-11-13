@@ -26,6 +26,10 @@ final class LanScanner: NSObject, LanScanningService, MMLANScannerDelegate {
         finishSubject.eraseToAnyPublisher()
     }
     
+    var isWifiEnabled: Bool {
+        NetworkHelper.isWiFiEnabled
+    }
+    
     private var scanner: MMLANScanner?
     private let deviceSubject = PassthroughSubject<LanDevice, Never>()
     private let progressSubject = PassthroughSubject<(Int, Int), Never>()

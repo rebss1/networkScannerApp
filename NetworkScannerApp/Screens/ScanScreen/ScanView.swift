@@ -9,32 +9,29 @@ import SwiftUI
 
 struct ScanView: View {
     
-    // MARK: - Properties
-
     @StateObject private var viewModel = ScanViewModel()
     
-    // MARK: - Body
-
     var body: some View {
         NavigationView {
-            VStack(spacing: 16) {
-                if viewModel.isScanning {
-                    ProgressView(value: viewModel.progress)
-                        .progressViewStyle(.linear)
-                        .padding(.horizontal)
-                    Text("Сканирование… \(Int(viewModel.progress * 100))%")
-                        .font(.caption)
-                } else {
-                    Text("Нажмите «Начать», чтобы просканировать устройства по Bluetooth")
-                        .font(.caption)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                }
+            VStack(spacing: 50) {
                 
-                Button(viewModel.isScanning ? "Остановить" : "Начать") {
-                    viewModel.isScanning ? viewModel.stopScanEarly() : viewModel.startScan()
-                }
-                .buttonStyle(.borderedProminent)
+                Spacer()
+                
+                Text("Сканирование… \(Int(viewModel.progress * 100))%")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+                
+                ScanCircleView(isScanning: viewModel.isScanning)
+                    .onTapGesture {
+                        viewModel.isScanning ? viewModel.stopScanEarly() : viewModel.startScan()
+                    }
+                
+                Text("Нажмите кнопку выше, чтобы начать поиск устройств")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
                 
                 NavigationLink(
                     isActive: Binding(
@@ -44,13 +41,9 @@ struct ScanView: View {
                     destination: {
                         if let id = viewModel.lastSavedSessionId {
                             DevicesListView(sessionId: id)
-                        } else {
-                            EmptyView()
                         }
                     },
-                    label: {
-                        EmptyView()
-                    }
+                    label: { EmptyView() }
                 )
                 .hidden()
             }

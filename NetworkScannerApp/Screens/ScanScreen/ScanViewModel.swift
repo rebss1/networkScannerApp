@@ -42,41 +42,47 @@ final class ScanViewModel: ObservableObject {
 
     func startScan() {
         guard !isScanning else { return }
-        isScanning = true
-        progress = 0
-        scanStart = Date()
-        
-        if bluetoothState != .poweredOn {
+
+        let btOn = bluetoothState == .poweredOn
+        let wifiOn = lanScanningService.isWifiEnabled
+
+        if !btOn && !wifiOn {
             Popup.showAlert(
-                title: "Bluetooth выключен",
-                message: "Включите Bluetooth в настройках.",
+                title: "Ошибка",
+                message: "Bluetooth и Wi-Fi выключены. Сканирование невозможно.",
                 buttonTitle: "OK",
                 onTap: nil
             )
+            return
         }
-        
-        collectedBT = []
-        collectedLAN = []
-        
-        if bluetoothState == .poweredOn {
-            bluetoothScanningService.startScan(timeout: scanDuration)
-        }
-        lanScanningService.start(timeout: scanDuration)
-        
-        Task { [weak self] in
-            guard let self else { return }
-            let start = Date()
-            while self.isScanning {
-                try? await Task.sleep(nanoseconds: 100_000_000)
-                let elapsed = Date().timeIntervalSince(start)
-                await MainActor.run {
-                    self.progress = min(1, elapsed / self.scanDuration)
-                    if elapsed >= self.scanDuration {
-                        self.finishScan()
-                    }
+
+        if !btOn && wifiOn {
+            Popup.showConfirm(
+                title: "Bluetooth выключен",
+                message: "Продолжить сканирование только по Wi-Fi (LAN)?",
+                yesTitle: "Продолжить",
+                noTitle: "Отмена",
+                onYes: { [weak self] in
+                    self?.startScan(scanBT: false, scanLAN: true)
                 }
-            }
+            )
+            return
         }
+
+        if btOn && !wifiOn {
+            Popup.showConfirm(
+                title: "Wi-Fi выключен",
+                message: "Продолжить сканирование только по Bluetooth?",
+                yesTitle: "Продолжить",
+                noTitle: "Отмена",
+                onYes: { [weak self] in
+                    self?.startScan(scanBT: true, scanLAN: false)
+                }
+            )
+            return
+        }
+
+        startScan(scanBT: true, scanLAN: true)
     }
     
     func stopScanEarly() {
@@ -86,9 +92,50 @@ final class ScanViewModel: ObservableObject {
         finishScan()
     }
     
+    private func startScan(scanBT: Bool, scanLAN: Bool) {
+        isScanning = true
+        progress = 0
+        scanStart = Date()
+
+        collectedBT = []
+        collectedLAN = []
+
+        if scanBT {
+            bluetoothScanningService.startScan(timeout: scanDuration)
+        }
+        if scanLAN {
+            lanScanningService.start(timeout: scanDuration)
+        }
+
+        Task { [weak self] in
+            guard let self else { return }
+            let start = Date()
+            
+            while true {
+                try? await Task.sleep(nanoseconds: 100_000_000)
+                
+                await MainActor.run {
+                    guard self.isScanning else { return }
+                    
+                    let elapsed = Date().timeIntervalSince(start)
+                    self.progress = min(1, elapsed / self.scanDuration)
+                    
+                    if elapsed >= self.scanDuration {
+                        self.finishScan()
+                    }
+                }
+                
+                if await MainActor.run(body: { self.isScanning == false }) {
+                    break
+                }
+            }
+        }
+    }
+    
     private func finishScan() {
         isScanning = false
         let finishedAt = Date()
+        
         do {
             let sessionId = try repository.saveSession(
                 startedAt: scanStart ?? finishedAt,
@@ -117,6 +164,8 @@ final class ScanViewModel: ObservableObject {
                 onTap: nil
             )
         }
+        
+        progress = 0
     }
     
     private func bind() {
